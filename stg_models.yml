@@ -1,0 +1,34 @@
+version: 2 
+ 
+models: 
+  - name: stg_emp_comp 
+    description: All employee compensation data. 
+    columns: 
+      - name: employee_id 
+        data_tests: 
+          - not_null 
+      - name: fiscal_year
+        data_tests: 
+          - not_null
+          - dbt_expectations.expect_column_values_to_match_regex:
+              regex: '^FY\d{4}$' 
+      - name: dept_id
+        data_tests: 
+          - not_null 
+      - name: fte_pct
+        data_tests: 
+          - not_null 
+          - dbt_utils.less_than:
+              value: 1
+      - name: base_pay
+        data_tests: 
+          - not_null 
+      - name: overtime_pay
+        data_tests: 
+          - not_null 
+      - name: other_pay
+        data_tests: 
+          - not_null 
+      - name: benefits
+        data_tests: 
+          - not_null 
